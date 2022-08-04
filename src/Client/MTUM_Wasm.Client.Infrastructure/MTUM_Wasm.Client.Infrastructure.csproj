@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\MTUM_Wasm.Shared.Infrastructure\MTUM_Wasm.Shared.Infrastructure.csproj" />
+    <ProjectReference Include="..\MTUM_Wasm.Client.Core\MTUM_Wasm.Client.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="MTUM_Wasm.Client.Web" />
+  </ItemGroup>
+</Project>

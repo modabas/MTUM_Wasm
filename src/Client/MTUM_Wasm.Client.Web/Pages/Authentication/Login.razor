@@ -1,0 +1,34 @@
+﻿@using MTUM_Wasm.Client.Core.Utility
+@layout AuthLayout
+
+<div class="default-input-card">
+    <MudCard Elevation="1">
+        <MudForm Model="@_loginRequest" @ref="_form" Validation="@(_loginRequestValidator.ValidateValue)" ValidationDelay="1000">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h5">Sign in</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudStack Spacing="3">
+                    <MudTextField Label="Email"
+                                  @bind-Value="_loginRequest.EmailAddress"
+                                  For="@(() => _loginRequest.EmailAddress)"
+                                  Mask="@emailMask"
+                                  HelperText="@emailMask.Mask"
+                                  Immediate="true" />
+                    <MudTextField Label="Password"
+                                  @bind-Value="_loginRequest.Password"
+                                  For="@(() => _loginRequest.Password)"
+                                  InputType="@_passwordInput" Adornment="Adornment.End" AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="TogglePasswordVisibility"
+                                  Immediate="true" />
+                </MudStack>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary" Link="@PageUri.Authentication.ForgotPassword">Forgot password?</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="(() => SignIn())">Sign in</MudButton>
+            </MudCardActions>
+        </MudForm>
+    </MudCard>
+</div>
+

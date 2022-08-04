@@ -1,0 +1,19 @@
+﻿@using MTUM_Wasm.Client.Core.Utility
+@using MTUM_Wasm.Shared.Core.Common.Authorization
+<MudNavMenu Class="mt-4">
+    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+    <AuthorizeView Policy="@Policy.Name.IsTenantAdmin">
+        <MudNavGroup Title="Administration" Icon="@Icons.Filled.Settings" Expanded="true">
+            <MudNavLink Href="@PageUri.TenantAdmin.Users" Icon="@Icons.Filled.Person">Users</MudNavLink>
+            <MudNavLink Href="@PageUri.TenantAdmin.TenantNacPolicy" Icon="@Icons.Filled.Security">Tenant Nac Policy</MudNavLink>
+            <MudNavLink Href="@PageUri.TenantAdmin.AuditLogs" Icon="@Icons.Filled.ManageSearch">Audit Logs</MudNavLink>
+        </MudNavGroup>
+    </AuthorizeView>
+    <AuthorizeView Policy="@Policy.Name.IsSystemAdmin">
+        <MudNavGroup Title="System Administration" Icon="@Icons.Filled.SettingsApplications" Expanded="true">
+            <MudNavLink Href="@PageUri.SystemAdmin.Tenants" Icon="@Icons.Outlined.OtherHouses">Tenants</MudNavLink>
+            <MudNavLink Href="@PageUri.SystemAdmin.SystemAdmins" Icon="@Icons.Outlined.PersonPin">System admins</MudNavLink>
+            <MudNavLink Href="@PageUri.SystemAdmin.AuditLogs" Icon="@Icons.Filled.ManageSearch">Audit Logs</MudNavLink>
+        </MudNavGroup>
+    </AuthorizeView>
+</MudNavMenu>

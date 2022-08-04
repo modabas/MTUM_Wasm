@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <ServerGarbageCollection>true</ServerGarbageCollection>
+	<ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
+	<UserSecretsId>f2e01d91-753b-4528-a22b-6ddff2649abd</UserSecretsId>
+	<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	<DockerfileContext>..\..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.1.2" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.7" />
+    <PackageReference Include="Microsoft.Orleans.Clustering.AdoNet" Version="3.6.2" />
+    <PackageReference Include="Microsoft.Orleans.Persistence.AdoNet" Version="3.6.2" />
+    <PackageReference Include="Microsoft.Orleans.Reminders.AdoNet" Version="3.6.2" />
+    <PackageReference Include="Microsoft.Orleans.Server" Version="3.6.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.16.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Client\MTUM_Wasm.Client.Web\MTUM_Wasm.Client.Web.csproj" />
+    <ProjectReference Include="..\MTUM_Wasm.Server.Infrastructure\MTUM_Wasm.Server.Infrastructure.csproj" />
+  </ItemGroup>
+
+
+</Project>

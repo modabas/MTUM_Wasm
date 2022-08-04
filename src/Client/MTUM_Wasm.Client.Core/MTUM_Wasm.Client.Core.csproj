@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.7" />
+    <PackageReference Include="Toolbelt.Blazor.HttpClientInterceptor" Version="10.1.0" />
+    <PackageReference Include="MudBlazor" Version="6.0.14" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="MTUM_Wasm.Client.Infrastructure" />
+    <InternalsVisibleTo Include="MTUM_Wasm.Client.Web" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\MTUM_Wasm.Shared.Core\MTUM_Wasm.Shared.Core.csproj" />
+  </ItemGroup>  
+</Project>

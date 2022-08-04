@@ -1,0 +1,25 @@
+﻿@using MTUM_Wasm.Client.Core.Utility
+@using MTUM_Wasm.Client.Core.Utility.QueryHelpers
+@inject NavigationManager NavigationManager
+
+@code {
+    protected override void OnInitialized()
+    {
+            var currentUri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+
+            //if current uri is login page, don't do anything to avoid cyclic redirection
+            var loginUri = new Uri(PageUri.Authentication.Login);
+            if (Uri.Compare(loginUri, currentUri, UriComponents.Path, UriFormat.Unescaped, StringComparison.OrdinalIgnoreCase) != 0)
+            {
+                if (QueryHelpers.ParseQuery(currentUri.Query).TryGetValue("returnUrl", out var param))
+                {
+                    var returnUrlParam = param.First();
+                    NavigationManager.NavigateTo($"{PageUri.Authentication.Login}?returnUrl={Uri.EscapeDataString(returnUrlParam)}");
+                }
+                else
+                {
+                    NavigationManager.NavigateTo($"{PageUri.Authentication.Login}?returnUrl={Uri.EscapeDataString(NavigationManager.ToBaseRelativePath(NavigationManager.Uri))}");
+                }
+            }
+    }
+}

@@ -1,0 +1,47 @@
+﻿<MudForm Model="@_createUserRequest" @ref="_form" Validation="@(_createUserRequestValidator.ValidateValue)" ValidationDelay="1000">
+    <MudDialog>
+        <TitleContent>
+            <MudText Typo="Typo.h5">Create user</MudText>
+        </TitleContent>
+        <DialogContent>
+            <MudStack Spacing="3">
+                <MudTextField Label="Email Address"
+                              @bind-Value="_createUserRequest.Email"
+                              For="@(() => _createUserRequest.Email)"
+                              Mask="@emailMask"
+                              HelperText="@emailMask.Mask"
+                              Immediate="true" />
+                <MudTextField Label="Given Name"
+                              @bind-Value="_createUserRequest.GivenName"
+                              For="@(() => _createUserRequest.GivenName)"
+                              Immediate="true" />
+                <MudTextField Label="Middle Name"
+                              @bind-Value="_createUserRequest.MiddleName"
+                              For="@(() => _createUserRequest.MiddleName)"
+                              Immediate="true" />
+                <MudTextField Label="Family Name"
+                              @bind-Value="_createUserRequest.FamilyName"
+                              For="@(() => _createUserRequest.FamilyName)"
+                              Immediate="true" />
+                <MudStack Row="true">
+                    <MudTextField For="@(() => _createUserRequest.TemporaryPassword)"
+                                  InputType="@_passwordInput"
+                                  Adornment="Adornment.End"
+                                  AdornmentIcon="@_passwordInputIcon"
+                                  OnAdornmentClick="TogglePasswordVisibility"
+                                  @bind-Value="_createUserRequest.TemporaryPassword"
+                                  Label="Temporary Password" />
+                    <MudIconButton Icon="@Icons.Filled.Password" OnClick="@(() => GenerateRandomPassword())"></MudIconButton>
+                </MudStack>
+                <MudTextField For="@(() => _createUserRequest.ConfirmPassword)"
+                              InputType="@_passwordInput"
+                              @bind-Value="_createUserRequest.ConfirmPassword"
+                              Label="Confirm Password" />
+            </MudStack>
+        </DialogContent>
+        <DialogActions>
+            <MudButton Variant="Variant.Text" Color="Color.Inherit" Class="ml-auto" OnClick="(() => Cancel())">Cancel</MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" Class="ml-5" OnClick="(() => Create())">Create</MudButton>
+        </DialogActions>
+    </MudDialog>
+</MudForm>

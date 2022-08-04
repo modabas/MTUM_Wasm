@@ -1,0 +1,82 @@
+﻿@using MTUM_Wasm.Client.Core.Utility
+@using MTUM_Wasm.Shared.Core.Common.Dto
+@layout MainLayout
+
+<MudCard>
+    <MudForm Model="@_searchAuditLogsRequest" @ref="_form" Validation="@(_searchAuditLogsRequestValidator.ValidateValue)" ValidationDelay="1000">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h5">Audit logs</MudText>
+            </CardHeaderContent>
+            <CardHeaderActions>
+                <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Search" Color="Color.Primary" Class="ml-auto" OnClick="(() => Search())">Search</MudButton>
+            </CardHeaderActions>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudGrid>
+                <MudItem xs=3>
+                    <MudTextField Label="User Email"
+                                  HelperText="Can leave blank to search for all users."
+                                  @bind-Value="_searchAuditLogsRequest.UserEmail"
+                                  For="@(() => _searchAuditLogsRequest.UserEmail)"
+                                  Immediate="true" 
+                                  Clearable="true" />
+
+                </MudItem>
+                <MudItem xs=3>
+                    <MudTextField Label="Command Name"
+                                  HelperText="Can leave blank to search for all commands."
+                                  @bind-Value="_searchAuditLogsRequest.CommandName"
+                                  For="@(() => _searchAuditLogsRequest.CommandName)"
+                                  Immediate="true"
+                                  Clearable="true" />
+
+                </MudItem>
+                <MudItem xs=3>
+                    <MudDatePicker Label="Start Date (Utc)" DateFormat="@Definitions.DateStringFormat" @bind-Date="_searchAuditLogsRequest.StartDate" For="@(() => _searchAuditLogsRequest.StartDate)" />
+                </MudItem>
+                <MudItem xs=3>
+                    <MudDatePicker Label="End Date (Utc)" DateFormat="@Definitions.DateStringFormat" @bind-Date="_searchAuditLogsRequest.EndDate" For="@(() => _searchAuditLogsRequest.EndDate)" />
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudForm>
+</MudCard>
+
+<MudDataGrid MultiSelection="false"
+             ServerData="@(new Func<GridState<AuditLogDto>, Task<GridData<AuditLogDto>>>(ServerReload))"
+             RowClick="OnAuditTableRowClick" @ref="_grid"
+             Hover="true" Sortable="false" Filterable="false" T="AuditLogDto" Dense="true">
+    <Columns>
+        <Column T="AuditLogDto" Field="Email" Title="User" />
+        <Column T="AuditLogDto" Field="CommandName" Title="Command" />
+        <Column T="AuditLogDto" Field="RemoteIp" Title="Remote IP" />
+        <Column T="AuditLogDto" Field="CreatedAt" Title="Created At (Utc)">
+            <CellTemplate>
+                @context.Item.CreatedAt.ToString(Definitions.DateTimeStringFormat)
+            </CellTemplate>
+        </Column>
+        <Column T="AuditLogDto" Sortable="false" ShowColumnOptions="false">
+            <CellTemplate>
+                <MudIcon Icon="@(_detailCollection.GetValueOrDefault(context.Item.Id) ? Icons.Filled.KeyboardArrowDown:Icons.Filled.KeyboardArrowUp)"></MudIcon>
+            </CellTemplate>
+        </Column>
+    </Columns>
+    <ChildRowContent>
+        @if (_detailCollection.GetValueOrDefault(context.Item.Id))
+        {
+            <td colspan="5">
+                <MudTextField Label="Log Entry" Lines="10" Class="ml-4 mt-4 mb-2"
+                            @bind-Value="context.Item.Entry"
+                            ReadOnly="true" />
+                <MudTextField Label="User metadata" Lines="10" Class="ml-4 mt-4 mb-2" 
+                            @bind-Value="context.Item.User"
+                            ReadOnly="true" />
+            </td>
+        }
+    </ChildRowContent>
+    <PagerContent>
+        <MudDataGridPager T="AuditLogDto" PageSizeOptions="@(new int[] {10,25})" />
+    </PagerContent>
+</MudDataGrid>
+

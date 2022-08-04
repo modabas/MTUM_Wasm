@@ -1,0 +1,19 @@
+﻿<MudForm Model="@_createTenantRequest" @ref="_form" Validation="@(_createTenantRequestValidator.ValidateValue)" ValidationDelay="1000">
+    <MudDialog>
+        <TitleContent>
+            <MudText Typo="Typo.h5">Create tenant</MudText>
+        </TitleContent>
+        <DialogContent>
+            <MudStack Spacing="3">
+                <MudTextField Label="Name"
+                              @bind-Value="_createTenantRequest.Name"
+                              For="@(() => _createTenantRequest.Name)"
+                              Immediate="true" />
+            </MudStack>
+        </DialogContent>
+        <DialogActions>
+            <MudButton Variant="Variant.Text" Color="Color.Inherit" Class="ml-auto" OnClick="(() => Cancel())">Cancel</MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" Class="ml-5" OnClick="(() => Create())">Create</MudButton>
+        </DialogActions>
+    </MudDialog>
+</MudForm>

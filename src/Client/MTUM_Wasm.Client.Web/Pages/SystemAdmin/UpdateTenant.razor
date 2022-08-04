@@ -1,0 +1,28 @@
+﻿<MudForm Model="@_updateTenantRequest" @ref="_form" Validation="@(_updateTenantRequestValidator.ValidateValue)" ValidationDelay="1000">
+    <MudDialog>
+        <TitleContent>
+            <MudText Typo="Typo.h5">Update tenant</MudText>
+        </TitleContent>
+        <DialogContent>
+            <MudStack Spacing="3">
+                <MudTextField Label="Tenant Id"
+                              @bind-Value="_updateTenantRequest.Id"
+                              For="@(() => _updateTenantRequest.Id)"
+                              T="Guid"
+                              ReadOnly="true"
+                              Immediate="true" />
+                <MudTextField Label="Name"
+                              @bind-Value="_updateTenantRequest.Name"
+                              For="@(() => _updateTenantRequest.Name)"
+                              Immediate="true" />
+                <MudCheckBox Label="Enabled" Class="ml-n4" Color="Color.Primary"
+                             @bind-Checked="_updateTenantRequest.IsEnabled"
+                             For="@(() => _updateTenantRequest.IsEnabled)" />
+            </MudStack>
+        </DialogContent>
+        <DialogActions>
+            <MudButton Variant="Variant.Text" Color="Color.Inherit" Class="ml-auto" OnClick="(() => Cancel())">Cancel</MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" Class="ml-5" OnClick="(() => Update())">Update</MudButton>
+        </DialogActions>
+    </MudDialog>
+</MudForm>

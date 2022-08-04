@@ -1,0 +1,27 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider Theme="currentTheme" />
+<MudDialogProvider/>
+<MudSnackbarProvider/>
+
+<MudLayout>
+    <MudAppBar>
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@(async (e) => await DrawerToggleAsync())" />
+        <MudText Typo="Typo.h5" Class="ml-3">MTUM_Wasm</MudText>
+        <MudSpacer />
+        <LoginDisplay />
+        <MudIconButton Icon="@modeIcon" Color="Color.Inherit" OnClick="@(async ()=>await SwitchModeAsync())" Edge="Edge.End" />
+    </MudAppBar>
+    <MudDrawer @bind-Open="isDrawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+        <NavMenu/>
+    </MudDrawer>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="my-16 pt-16">
+            @Body
+            <Spinner/>
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+
+

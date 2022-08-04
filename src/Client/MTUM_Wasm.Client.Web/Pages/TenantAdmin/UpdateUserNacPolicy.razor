@@ -1,0 +1,50 @@
+﻿<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h5">Update user nac policy</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudGrid Spacing="10">
+            <MudItem xs="6">
+                <MudStack Spacing="3">
+                    <MudCheckBox @bind-Checked="_useSafelist" Label="Use safelist" Color="Color.Primary" />
+                    <MudStack Row="true">
+                        <MudTextField Label="Safelist IP Address" @bind-Value="_safeIPAddress" ReadOnly="!_useSafelist" />
+                        <MudTooltip Text="Add IP Address to safelist.">
+                            <MudIconButton Disabled="!_useSafelist" Icon="@Icons.Filled.Add" OnClick="@(() => AddSafelistIPAddress())"></MudIconButton>
+                        </MudTooltip>
+                    </MudStack>
+                    <MudContainer Style="max-height: 300px; height: 300px; overflow-y: scroll">
+                        <MudChipSet ReadOnly="!_useSafelist" AllClosable="true" OnClose="RemoveSafelistIPAddress">
+                            @foreach (var ipAddress in _safeIPAddressList)
+                            {
+                                <MudChip Text="@ipAddress"></MudChip>
+                            }
+                        </MudChipSet>
+                    </MudContainer>
+                </MudStack>
+            </MudItem>
+            <MudItem xs="6">
+                <MudStack Spacing="3">
+                    <MudStack Row="true">
+                        <MudTextField Label="Blacklist IP Address" @bind-Value="_blackIPAddress" />
+                        <MudTooltip Text="Add IP Address to blacklist.">
+                            <MudIconButton Icon="@Icons.Filled.Add" OnClick="@(() => AddBlacklistIPAddress())"></MudIconButton>
+                        </MudTooltip>
+                    </MudStack>
+                    <MudContainer Style="max-height: 300px; height: 300px; overflow-y: scroll">
+                        <MudChipSet AllClosable="true" OnClose="RemoveBlacklistIPAddress">
+                            @foreach (var ipAddress in _blackIPAddressList)
+                            {
+                                <MudChip Text="@ipAddress"></MudChip>
+                            }
+                        </MudChipSet>
+                    </MudContainer>
+                </MudStack>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Text" Color="Color.Inherit" Class="ml-auto" OnClick="(() => Cancel())">Cancel</MudButton>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" Class="ml-5" OnClick="(() => Update())">Update</MudButton>
+    </DialogActions>
+</MudDialog>

@@ -1,0 +1,61 @@
+﻿@using MTUM_Wasm.Shared.Core.Common.Dto
+@layout MainLayout
+
+<MudCard>
+    <MudCardContent>
+        <MudDataGrid MultiSelection="false" Items="@_getUsersResponse.Users" Hover="true" Sortable="true" Filterable="true" QuickFilter="@_quickFilter" T="SystemUserDto" Dense="true">
+            <ToolBarContent>
+                <MudText Typo="Typo.h5">@_tenantNameLabel</MudText>
+                <MudSpacer />
+                <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" 
+                              AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                <MudTooltip Text="Create new user for tenant">
+                <MudIconButton Icon="@Icons.Filled.PersonAddAlt1" OnClick="@(() => ShowCreateUserDialog())"></MudIconButton>
+                </MudTooltip>
+            </ToolBarContent>
+            <ColGroup>
+                <col />
+                <col />
+                <col />
+                <col />
+                <col />
+                <col class="icon-button-cell" />
+            </ColGroup>
+            <Columns>
+                <Column T="SystemUserDto" Field="EmailAddress" Title="Email" />
+                <Column T="SystemUserDto" Field="FullName" Title="Full Name" />
+                <Column T="SystemUserDto" Field="UserStatus" Title="Status" />
+                <Column T="SystemUserDto" Field="Enabled" Title="Enabled" >
+                    <CellTemplate>
+                        <MudCheckBox @bind-Checked="@context.Item.Enabled" ReadOnly="true" />
+                    </CellTemplate>
+                    </Column>
+
+                <Column T="SystemUserDto" Field="IsEmailVerified" Title="Email Verified" >
+                    <CellTemplate>
+                        <MudCheckBox @bind-Checked="@context.Item.IsEmailVerified" ReadOnly="true" />
+                    </CellTemplate>
+                    </Column>
+                <Column T="SystemUserDto" Sortable="false" ShowColumnOptions="false" Filterable="false">
+                    <CellTemplate>
+                    <MudButtonGroup>
+                        <MudTooltip Text="Update user attributes">
+                        <MudIconButton Icon="@Icons.Filled.Edit" OnClick="@(() => ShowUpdateUserDialog(context.Item.EmailAddress))"></MudIconButton>
+                        </MudTooltip>
+                        <MudTooltip Text="Update user groups">
+                        <MudIconButton Icon="@Icons.Filled.Groups" OnClick="@(() => ShowUpdateUserGroupsDialog(context.Item.EmailAddress))"></MudIconButton>
+                        </MudTooltip>
+                        <MudTooltip Text="Update user nac policy">
+                        <MudIconButton Icon="@Icons.Filled.Security" OnClick="@(() => ShowUpdateUserNacPolicyDialog(context.Item.EmailAddress))"></MudIconButton>
+                        </MudTooltip>
+                    </MudButtonGroup>
+                    </CellTemplate>
+                </Column>
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="SystemUserDto" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudCardContent>
+</MudCard>
+

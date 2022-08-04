@@ -1,0 +1,20 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider Theme="currentTheme" />
+<MudDialogProvider/>
+<MudSnackbarProvider/>
+
+<MudLayout>
+    <MudAppBar Elevation="0">
+        <MudText Typo="Typo.h5" Class="ml-3">MTUM_Wasm</MudText>
+        <MudSpacer />
+        <LoginDisplay />
+        <MudIconButton Icon="@modeIcon" Color="Color.Inherit" OnClick="@(async ()=>await SwitchModeAsync())" Edge="Edge.End" />
+    </MudAppBar>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
+            @Body
+            <Spinner/>
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>

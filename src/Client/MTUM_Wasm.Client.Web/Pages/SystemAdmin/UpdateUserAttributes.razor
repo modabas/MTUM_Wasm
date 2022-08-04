@@ -1,0 +1,36 @@
+﻿<MudForm Model="@_updateUserAttributesRequest" @ref="_form" Validation="@(_updateUserAttributesRequestValidator.ValidateValue)" ValidationDelay="1000">
+    <MudDialog>
+        <TitleContent>
+            <MudText Typo="Typo.h5">Update user attributes</MudText>
+        </TitleContent>
+        <DialogContent>
+            <MudStack Spacing="3">
+                <MudTextField Label="Email Address"
+                              @bind-Value="_updateUserAttributesRequest.Email"
+                              For="@(() => _updateUserAttributesRequest.Email)"
+                              ReadOnly="true"
+                              Immediate="true" />
+                <MudTextField Label="Given Name"
+                              @bind-Value="_updateUserAttributesRequest.GivenName"
+                              For="@(() => _updateUserAttributesRequest.GivenName)"
+                              Immediate="true" />
+                <MudTextField Label="Middle Name"
+                              @bind-Value="_updateUserAttributesRequest.MiddleName"
+                              For="@(() => _updateUserAttributesRequest.MiddleName)"
+                              Immediate="true" />
+                <MudTextField Label="Family Name"
+                              @bind-Value="_updateUserAttributesRequest.FamilyName"
+                              For="@(() => _updateUserAttributesRequest.FamilyName)"
+                              Immediate="true" />
+                <MudCheckBox Label="Email Verified" Class="ml-n4" Color="Color.Primary"
+                             @bind-Checked="_updateUserAttributesRequest.IsEmailVerified"
+                             For="@(() => _updateUserAttributesRequest.IsEmailVerified)" />
+            </MudStack>
+        </DialogContent>
+        <DialogActions>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" Class="mr-auto" Disabled="@_enabledButtonIsDisabled" OnClick="(() => ToggleEnabled())">@_enabledButtonText</MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Inherit" Class="ml-auto" OnClick="(() => Cancel())">Cancel</MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" Class="ml-5" OnClick="(() => Update())">Update</MudButton>
+        </DialogActions>
+    </MudDialog>
+</MudForm>

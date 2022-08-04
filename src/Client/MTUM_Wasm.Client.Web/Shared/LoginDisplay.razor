@@ -1,0 +1,18 @@
+﻿@using MTUM_Wasm.Client.Core.Utility
+
+<AuthorizeView>
+    <Authorized>
+        <MudText Class="mr-5">@WelcomeMessage</MudText>
+        <MudButtonGroup OverrideStyles="false" Class="ml-3 mr-5">
+            <MudButton Variant="Variant.Text" Color="Color.Inherit" OnClick="() => SignOut(LogoutTypeEnum.Local)">Sign Out</MudButton>
+            <MudMenu Color="Color.Inherit" Icon="@Icons.Material.Filled.ArrowDropDown">
+                <MudMenuItem OnClick="() => SignOut(LogoutTypeEnum.Local)">Sign Out</MudMenuItem>
+                <MudMenuItem OnClick="() => SignOut(LogoutTypeEnum.Global)">Sign Out Globally</MudMenuItem>
+            </MudMenu>
+        </MudButtonGroup>
+    </Authorized>
+    <NotAuthorized>
+        <MudButton Variant="Variant.Text" Color="Color.Inherit" Link="@PageUri.Authentication.Login">Sign In</MudButton>
+        <MudButton Variant="Variant.Text" Class="ml-3" Color="Color.Inherit" Link="@PageUri.Authentication.ChangePassword">Change Password</MudButton>
+    </NotAuthorized>
+</AuthorizeView>

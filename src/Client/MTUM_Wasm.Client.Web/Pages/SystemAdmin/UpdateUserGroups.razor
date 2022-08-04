@@ -1,0 +1,26 @@
+﻿<MudForm Model="@_updateUserGroupsRequest" @ref="_form" Validation="@(_updateUserGroupsRequestValidator.ValidateValue)" ValidationDelay="1000">
+    <MudDialog>
+        <TitleContent>
+            <MudText Typo="Typo.h5">Update user groups</MudText>
+        </TitleContent>
+        <DialogContent>
+            <MudStack Spacing="3">
+                <MudTextField Label="Email Address"
+                              @bind-Value="_updateUserGroupsRequest.Email"
+                              For="@(() => _updateUserGroupsRequest.Email)"
+                              ReadOnly="true"
+                              Immediate="true" />
+                <MudChipSet @bind-SelectedChips="_selectedGroupChips" MultiSelection="true" Filter="true">
+                    @foreach (var possibleGroup in _possibleGroups)
+                    {
+                        <MudChip @ref="PossibleGroupChipRefCollector" Text="@possibleGroup" Variant="Variant.Outlined"></MudChip>
+                    }
+                </MudChipSet>
+            </MudStack>
+        </DialogContent>
+        <DialogActions>
+            <MudButton Variant="Variant.Text" Color="Color.Inherit" Class="ml-auto" OnClick="(() => Cancel())">Cancel</MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" Class="ml-5" OnClick="(() => Update())">Update</MudButton>
+        </DialogActions>
+    </MudDialog>
+</MudForm>

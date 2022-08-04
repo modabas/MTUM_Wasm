@@ -1,0 +1,52 @@
+﻿@layout MainLayout
+<MudCard>
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h5">Tenant nac policy</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudGrid Spacing="10">
+            <MudItem xs="6">
+                <MudStack Spacing="3">
+                    <MudCheckBox @bind-Checked="_useSafelist" Label="Use safelist" Color="Color.Primary" />
+                    <MudStack Row="true">
+                        <MudTextField Label="Safelist IP Address" @bind-Value="_safeIPAddress" ReadOnly="!_useSafelist" />
+                        <MudTooltip Text="Add IP Address to safelist.">
+                            <MudIconButton Disabled="!_useSafelist" Icon="@Icons.Filled.Add" OnClick="@(() => AddSafelistIPAddress())"></MudIconButton>
+                        </MudTooltip>
+                    </MudStack>
+                    <MudContainer Style="max-height: 400px; height: 400px; overflow-y: scroll">
+                        <MudChipSet ReadOnly="!_useSafelist" AllClosable="true" OnClose="RemoveSafelistIPAddress">
+                            @foreach (var ipAddress in _safeIPAddressList)
+                            {
+                                <MudChip Text="@ipAddress"></MudChip>
+                            }
+                        </MudChipSet>
+                    </MudContainer>
+                </MudStack>
+            </MudItem>
+            <MudItem xs="6">
+                <MudStack Spacing="3">
+                    <MudStack Row="true">
+                        <MudTextField Label="Blacklist IP Address" @bind-Value="_blackIPAddress" />
+                        <MudTooltip Text="Add IP Address to blacklist.">
+                            <MudIconButton Icon="@Icons.Filled.Add" OnClick="@(() => AddBlacklistIPAddress())"></MudIconButton>
+                        </MudTooltip>
+                    </MudStack>
+                    <MudContainer Style="max-height: 400px; height: 400px; overflow-y: scroll">
+                        <MudChipSet AllClosable="true" OnClose="RemoveBlacklistIPAddress">
+                            @foreach (var ipAddress in _blackIPAddressList)
+                            {
+                                <MudChip Text="@ipAddress"></MudChip>
+                            }
+                        </MudChipSet>
+                    </MudContainer>
+                </MudStack>
+            </MudItem>
+        </MudGrid>
+    </MudCardContent>
+    <MudCardActions>
+        <MudButton Disabled="!_updateButtonEnabled" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Update" Color="Color.Primary" Class="ml-auto" OnClick="(() => Update())">Update</MudButton>
+    </MudCardActions>
+</MudCard>

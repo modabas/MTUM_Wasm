@@ -1,0 +1,75 @@
+﻿@using MTUM_Wasm.Shared.Core.Common.Dto
+@layout MainLayout
+
+
+<MudCard>
+    <MudForm Model="@_addUserToSystemAdminsRequest" @ref="_form" Validation="@(_addUserToSystemAdminsRequestValidator.ValidateValue)" ValidationDelay="1000">
+        <MudCardHeader>
+            <MudTextField Label="Email Address"
+                          @bind-Value="_addUserToSystemAdminsRequest.Email"
+                          For="@(() => _addUserToSystemAdminsRequest.Email)"
+                          Mask="@emailMask"
+                          HelperText="@emailMask.Mask"
+                          Immediate="true" />
+            <MudButtonGroup>
+                <MudTooltip Text="Add user to system administrators group">
+                    <MudIconButton Icon="@Icons.Filled.AddCircleOutline" OnClick="@(() => AddUserToSystemAdmins())"></MudIconButton>
+                </MudTooltip>
+                <MudTooltip Text="Create new user">
+                    <MudIconButton Icon="@Icons.Filled.PersonAddAlt1" OnClick="@(() => ShowCreateUserDialog())"></MudIconButton>
+                </MudTooltip>
+            </MudButtonGroup>
+        </MudCardHeader>
+    </MudForm>
+    <MudCardContent>
+        <MudDataGrid MultiSelection="false" Items="_getUsersInGroupResponse.Users" Hover="true" Sortable="true" Filterable="true" QuickFilter="@_quickFilter" T="SystemUserDto" Dense="true">
+            <ToolBarContent>
+                <MudText Typo="Typo.h5">System administrators</MudText>
+                <MudSpacer />
+                <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start"
+                              AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            </ToolBarContent>
+            <ColGroup>
+                <col />
+                <col />
+                <col />
+                <col />
+                <col />
+                <col class="icon-button-cell" />
+            </ColGroup>
+            <Columns>
+                <Column T="SystemUserDto" Field="EmailAddress" Title="Email" />
+                <Column T="SystemUserDto" Field="FullName" Title="Full Name" />
+                <Column T="SystemUserDto" Field="UserStatus" Title="Status" />
+                <Column T="SystemUserDto" Field="Enabled" Title="Enabled" >
+                    <CellTemplate>
+                        <MudCheckBox @bind-Checked="@context.Item.Enabled" ReadOnly="true" />
+                    </CellTemplate>
+                    </Column>
+
+                <Column T="SystemUserDto" Field="IsEmailVerified" Title="Email Verified" >
+                    <CellTemplate>
+                        <MudCheckBox @bind-Checked="@context.Item.IsEmailVerified" ReadOnly="true" />
+                    </CellTemplate>
+                    </Column>
+                <Column T="SystemUserDto" Sortable="false" ShowColumnOptions="false" Filterable="false">
+                    <CellTemplate>
+                    <MudButtonGroup>
+                        <MudTooltip Text="Update user attributes">
+                            <MudIconButton Icon="@Icons.Filled.Edit" OnClick="@(() => ShowUpdateUserDialog(context.Item.EmailAddress))"></MudIconButton>
+                        </MudTooltip>
+                        <MudTooltip Text="Remove user from system administrators group">
+                            <MudIconButton Icon="@Icons.Filled.RemoveCircleOutline" OnClick="@(() => RemoveUserFromSystemAdmins(context.Item.EmailAddress))"></MudIconButton>
+                        </MudTooltip>
+                    </MudButtonGroup>
+                    </CellTemplate>
+                </Column>
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="SystemUserDto" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudCardContent>
+</MudCard>
+
+

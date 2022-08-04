@@ -1,0 +1,83 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTUM_Wasm.Shared.Core", "src\Shared\MTUM_Wasm.Shared.Core\MTUM_Wasm.Shared.Core.csproj", "{E665FD08-5629-4ECA-B254-3694DF06F479}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTUM_Wasm.Shared.Infrastructure", "src\Shared\MTUM_Wasm.Shared.Infrastructure\MTUM_Wasm.Shared.Infrastructure.csproj", "{8D72C7DF-3BC4-4781-8043-C96F182FEA49}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTUM_Wasm.Client.Core", "src\Client\MTUM_Wasm.Client.Core\MTUM_Wasm.Client.Core.csproj", "{E2CB745C-E223-4893-A4E1-9990B7742CDB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTUM_Wasm.Client.Infrastructure", "src\Client\MTUM_Wasm.Client.Infrastructure\MTUM_Wasm.Client.Infrastructure.csproj", "{99A06C3B-CB0E-4993-9AB8-D13851447515}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{14222CD0-A62F-429F-9B03-2E9CF17A9159}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{6A30BC39-F150-4585-A852-3416F6FFC760}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{6B56CBFA-6DE3-4CA0-B276-43C09D5FA980}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTUM_Wasm.Client.Web", "src\Client\MTUM_Wasm.Client.Web\MTUM_Wasm.Client.Web.csproj", "{FF006452-E80B-4FF5-BF4A-F0BAD374A837}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTUM_Wasm.Server.Core", "src\Server\MTUM_Wasm.Server.Core\MTUM_Wasm.Server.Core.csproj", "{7F1031A6-A57B-447E-B00D-91C8CF5BEBB4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTUM_Wasm.Server.Infrastructure", "src\Server\MTUM_Wasm.Server.Infrastructure\MTUM_Wasm.Server.Infrastructure.csproj", "{893BEF4E-F11A-43F2-8423-AF76CF4BFAA4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTUM_Wasm.Server.Web", "src\Server\MTUM_Wasm.Server.Web\MTUM_Wasm.Server.Web.csproj", "{9B52AA09-518C-4F77-A2C6-323E0ED32E90}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E665FD08-5629-4ECA-B254-3694DF06F479}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E665FD08-5629-4ECA-B254-3694DF06F479}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E665FD08-5629-4ECA-B254-3694DF06F479}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E665FD08-5629-4ECA-B254-3694DF06F479}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D72C7DF-3BC4-4781-8043-C96F182FEA49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D72C7DF-3BC4-4781-8043-C96F182FEA49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D72C7DF-3BC4-4781-8043-C96F182FEA49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D72C7DF-3BC4-4781-8043-C96F182FEA49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2CB745C-E223-4893-A4E1-9990B7742CDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2CB745C-E223-4893-A4E1-9990B7742CDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2CB745C-E223-4893-A4E1-9990B7742CDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2CB745C-E223-4893-A4E1-9990B7742CDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99A06C3B-CB0E-4993-9AB8-D13851447515}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99A06C3B-CB0E-4993-9AB8-D13851447515}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99A06C3B-CB0E-4993-9AB8-D13851447515}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99A06C3B-CB0E-4993-9AB8-D13851447515}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF006452-E80B-4FF5-BF4A-F0BAD374A837}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF006452-E80B-4FF5-BF4A-F0BAD374A837}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF006452-E80B-4FF5-BF4A-F0BAD374A837}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF006452-E80B-4FF5-BF4A-F0BAD374A837}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F1031A6-A57B-447E-B00D-91C8CF5BEBB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F1031A6-A57B-447E-B00D-91C8CF5BEBB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F1031A6-A57B-447E-B00D-91C8CF5BEBB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F1031A6-A57B-447E-B00D-91C8CF5BEBB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{893BEF4E-F11A-43F2-8423-AF76CF4BFAA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{893BEF4E-F11A-43F2-8423-AF76CF4BFAA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{893BEF4E-F11A-43F2-8423-AF76CF4BFAA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{893BEF4E-F11A-43F2-8423-AF76CF4BFAA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B52AA09-518C-4F77-A2C6-323E0ED32E90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B52AA09-518C-4F77-A2C6-323E0ED32E90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B52AA09-518C-4F77-A2C6-323E0ED32E90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B52AA09-518C-4F77-A2C6-323E0ED32E90}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E665FD08-5629-4ECA-B254-3694DF06F479} = {6B56CBFA-6DE3-4CA0-B276-43C09D5FA980}
+		{8D72C7DF-3BC4-4781-8043-C96F182FEA49} = {6B56CBFA-6DE3-4CA0-B276-43C09D5FA980}
+		{E2CB745C-E223-4893-A4E1-9990B7742CDB} = {14222CD0-A62F-429F-9B03-2E9CF17A9159}
+		{99A06C3B-CB0E-4993-9AB8-D13851447515} = {14222CD0-A62F-429F-9B03-2E9CF17A9159}
+		{FF006452-E80B-4FF5-BF4A-F0BAD374A837} = {14222CD0-A62F-429F-9B03-2E9CF17A9159}
+		{7F1031A6-A57B-447E-B00D-91C8CF5BEBB4} = {6A30BC39-F150-4585-A852-3416F6FFC760}
+		{893BEF4E-F11A-43F2-8423-AF76CF4BFAA4} = {6A30BC39-F150-4585-A852-3416F6FFC760}
+		{9B52AA09-518C-4F77-A2C6-323E0ED32E90} = {6A30BC39-F150-4585-A852-3416F6FFC760}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {440F139B-E759-4827-93EC-061CBEAE3FB7}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,64 @@
+﻿@using MTUM_Wasm.Client.Core.Utility
+@using MTUM_Wasm.Shared.Core.Common.Dto
+@layout MainLayout
+
+<MudCard>
+    <MudCardContent>
+        <MudDataGrid MultiSelection="false" Items="@_getTenantsResponse.Tenants" Hover="true" Sortable="true" Filterable="true" QuickFilter="@_quickFilter" T="TenantDto" Dense="true">
+            <ToolBarContent>
+                <MudText Typo="Typo.h5">Tenants</MudText>
+                <MudSpacer />
+                <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start"
+                              AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                <MudTooltip Text="Create new tenant">
+                    <MudIconButton Icon="@Icons.Filled.AddBusiness" OnClick="@(() => ShowCreateTenantDialog())"></MudIconButton>
+                </MudTooltip>
+            </ToolBarContent>
+            <ColGroup>
+                <col />
+                <col />
+                <col />
+                <col />
+                <col />
+                <col class="icon-button-cell" />
+            </ColGroup>
+            <Columns>
+                <Column T="TenantDto" Field="Id" Filterable="false"/>
+                <Column T="TenantDto" Field="Name" />
+                <Column T="TenantDto" Field="IsEnabled" Title="Enabled">
+                    <CellTemplate>
+                        <MudCheckBox @bind-Checked="@context.Item.IsEnabled" ReadOnly="true" />
+                    </CellTemplate>
+                </Column>
+                <Column T="TenantDto" Field="CreatedAt" Title="Created At">
+                    <CellTemplate>
+                        @context.Item.CreatedAt.ToString(Definitions.DateTimeStringFormat)
+                    </CellTemplate>
+                </Column>
+                <Column T="TenantDto" Field="LastModifiedAt" Title="Last Modified At">
+                    <CellTemplate>
+                        @context.Item.LastModifiedAt.ToString(Definitions.DateTimeStringFormat)
+                    </CellTemplate>
+                </Column>
+                <Column T="TenantDto" Sortable="false" ShowColumnOptions="false" Filterable="false">
+                    <CellTemplate>
+                        <MudButtonGroup>
+                            <MudTooltip Text="Update tenant attributes">
+                                <MudIconButton Icon="@Icons.Filled.Edit" OnClick="@(() => ShowUpdateTenantDialog(context.Item.Id))"></MudIconButton>
+                            </MudTooltip>
+                            <MudTooltip Text="Show tenant users">
+                                <MudIconButton Icon="@Icons.Outlined.Person" OnClick="@(() => ListTenantUsers(context.Item.Id))"></MudIconButton>
+                            </MudTooltip>
+                            <MudTooltip Text="Update user nac policy">
+                                <MudIconButton Icon="@Icons.Filled.Security" OnClick="@(() => ShowUpdateTenantNacPolicyDialog(context.Item.Id))"></MudIconButton>
+                            </MudTooltip>
+                        </MudButtonGroup>
+                    </CellTemplate>
+                </Column>
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="TenantDto" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudCardContent>
+</MudCard>
