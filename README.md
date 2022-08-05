@@ -1,17 +1,52 @@
 # MTUM_Wasm
-Multi tenant user management infrastructure with;
+Multi tenant user authentication/authorization management infrastructure with;
 1. AWS Cognito as identity provider with OAuth and Json web tokens,
 2. Blazor wasm as frontend,
-3. Microsoft Orleans for scaleable stateful distributed service, virtual actor framework, data cache and scheduler,
+3. Web API as backend access point and Microsoft Orleans for scaleable stateful distributed service, virtual actor framework, data cache and scheduler,
 4. Postgresql for additional tenant info and audit logs and as Microsoft Orleans management db.
 
 
 ## Setup
 Run scripts in src/Server/MTUM_Wasm.Server.Infrastructure/Database/Postgres/Document/ in your Postgresql server to initialize Microsoft Orleans management db and MTUM_Wasm service db structure. They may be in same or different databases.
 
-Setup a AWS Cognito user pool with following properties: login with email, no MFA, with a mutable custom attribute named "nac" with max langth 2048. Add following groups to user pool: "systemAdmin", "tenantAdmin", "tenantUser", "tenantViewer". Create an app client under user pool to be used from MTUM service for app integration.
+From AWS Console, setup a AWS Cognito user pool with following properties: login with email, no MFA, with a mutable custom attribute named "nac" with max langth 2048. Add following groups to user pool: "systemAdmin", "tenantAdmin", "tenantUser", "tenantViewer". Create an app client under user pool to be used from MTUM service for app integration.
 
 Fill out src/Server/MTUM_Wasm.Server.Web/appsettings.Development.json (for development environment) with Orleans management db connection string, Service db connection string and AWS Cognito user pool and client application settings
+
+Manually create first user within user pool from AWS Console and add to "systemAdmin" group. This user can now be used to login to MTUM application.
+
+## How does it work?
+
+### Authentication/Authorization
+Users acquire JWT tokens from AWS Cognito on sign-in. These tokens are used by both frontend (as a best effort, because nothing on client side is really secure) to determine which pages are available to user and by backend Web Api. Each request to backend has tokens in request headers and these tokens are validated for each request to determine user is authenticated and attributes within tokens are evaluated to determine web method specific authorization policies are satisfied by calling user.
+
+Tokens used in authentication and authorization are valid for an hour by default (can be modified from AWS Cognito setting in AWS Console). User also acquires a refreshToken on sign-in which is valid for a month by default. This refreshToken is being used by frontend to get new access and id tokens whenever they are close to expiration.
+
+Selecting "Sign-out" from user interface clears tokens from browser cache, but sessions from other browsers remain intact.
+
+Selecting "Sign-out Globally" from user interface clears tokens from browser cache and invalidates any refresh tokens granted until now. Other sessions already established at other browsers will remain intact until their access and id tokens expire (an hour max by default) but will not be refreshed from AWS Cognito because refresh tokens are invalidated. They will require to sign-in again.
+
+### User rights
+Users in "systemAdmin" group can;
+1. Create/modify tenants, users (for tenants or other system admins),
+2. Assign nac policy (ip white/black lists) on a user or tenant basis,
+3. View audit logs
+
+Users in "tenantAdmin" group can;
+1. Create/modify users (for their tenants), 
+2. Assign nac policy (ip white/black lists) on a user or their tenant,
+3. View audit logs for their tenant.
+
+### Securing other services
+Securing new apis in this project is done by simply decorating web methods with necessary policy attributes.
+
+Any other independent service can be secured by utilizing authentication and authorization infrastructure by request token validation and policy based authorization similar to web api in this project. AWS Cognito specific token validation and attribute evaluation logic is implemented by following classes on server side:
+
+```
+services.AddSingleton<ITokenClaimResolver, AwsCognitoTokenClaimResolver>();
+services.AddSingleton<IAwsCognitoConfigManager, AwsCognitoConfigManager>();
+services.AddSingleton<IClaimsTransformation, AwsClaimsTransformation>();
+```
 
 ## References
 1. [Clean Architecture Template for Blazor WebAssembly Built with MudBlazor Components](https://github.com/blazorhero/CleanArchitecture): A huge inspiration for many parts of MTUM_Wasm, especially on the client side.
