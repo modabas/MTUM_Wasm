@@ -26,5 +26,9 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="MTUM_Wasm.Server.Web" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Orleans_CodeGenInputs Remove="Identity\AwsCognito\Mapping\TokenValidationParametersTypeEnum.cs" />
   </ItemGroup>  
 </Project>

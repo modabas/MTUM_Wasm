@@ -23,7 +23,7 @@ internal static class ServiceCollectionExtensions
         services.Configure<AwsCognitoOptions>(awsCognitoOptionsSection);
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
         {
-            options.TokenValidationParameters = awsCognitoOptions.GetTokenValidationParameters();
+            options.TokenValidationParameters = awsCognitoOptions.GetTokenValidationParameters(TokenValidationParametersTypeEnum.ForAccessToken);
             options.MetadataAddress = $"https://cognito-idp.{awsCognitoOptions.Region}.amazonaws.com/{awsCognitoOptions.UserPoolId}/.well-known/openid-configuration";
         });
 
