@@ -1,5 +1,4 @@
-﻿using Ardalis.SmartEnum.Dapper;
-using MTUM_Wasm.Server.Core.Database.Entity;
+﻿using MTUM_Wasm.Server.Core.Database.Entity;
 using MTUM_Wasm.Server.Core.Database.Service;
 using MTUM_Wasm.Server.Infrastructure.Database.Postgres.Dapper.Mapping;
 using MTUM_Wasm.Server.Infrastructure.Database.Postgres.Dapper.TypeHandler;

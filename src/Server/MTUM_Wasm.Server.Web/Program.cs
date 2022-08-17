@@ -11,7 +11,6 @@ using MTUM_Wasm.Server.Core.TenantAdmin.Service;
 using MTUM_Wasm.Server.Infrastructure.Database.Postgres.Service;
 using MTUM_Wasm.Server.Infrastructure.Identity.AwsCognito.Utility;
 using MTUM_Wasm.Server.Web.Filters;
-using MTUM_Wasm.Server.Web.Swashbuckle;
 using MTUM_Wasm.Shared.Core.Common.Authorization;
 using MTUM_Wasm.Shared.Core.Common.Extension;
 using MTUM_Wasm.Shared.Core.Identity.Policy;
@@ -114,7 +113,6 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
     options.CustomSchemaIds(type => type.ToString());
-    options.SchemaFilter<SmartEnumSchemaFilter>();
 });
 
 builder.Services.AddAwsCognitoAuthentication(builder.Configuration);
