@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MTUM_Wasm.Shared.Core.SystemAdmin.Validation;
+using FluentValidation;
 
 namespace MTUM_Wasm.Server.Web.Controllers
 {
@@ -45,10 +47,12 @@ namespace MTUM_Wasm.Server.Web.Controllers
 
         [HttpPost("createTenant")]
         [ProducesResponseType(200, Type = typeof(IServiceResult))]
-        public async Task<IActionResult> CreateTenant([FromBody] CreateTenantRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateTenant([FromBody] CreateTenantRequest request, [FromServices] CreateTenantRequestValidator validator, CancellationToken cancellationToken)
         {
             if (request is null)
                 throw new ArgumentNullException(nameof(request));
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
 
             var ret = await _mediator.Send(new CreateTenantCommand() { Request = request.ToInput() }, cancellationToken);
 
@@ -57,8 +61,13 @@ namespace MTUM_Wasm.Server.Web.Controllers
 
         [HttpGet("getTenant")]
         [ProducesResponseType(200, Type = typeof(IServiceResult<GetTenantResponse>))]
-        public async Task<IActionResult> GetTenant([FromQuery]GetTenantRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetTenant([FromQuery] GetTenantRequest request, [FromServices] GetTenantRequestValidator validator, CancellationToken cancellationToken)
         {
+            if (request is null)
+                throw new ArgumentNullException(nameof(request));
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
+
             var dtoResult = await _mediator.Send(new GetTenantQuery() { Request = request.ToInput() }, cancellationToken);
             if (dtoResult.Succeeded)
                 return Ok(Result<GetTenantResponse>.Success(dtoResult.Data?.ToResponse()));
@@ -67,10 +76,12 @@ namespace MTUM_Wasm.Server.Web.Controllers
 
         [HttpPost("updateTenant")]
         [ProducesResponseType(200, Type = typeof(IServiceResult))]
-        public async Task<IActionResult> UpdateTenant([FromBody] UpdateTenantRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateTenant([FromBody] UpdateTenantRequest request, [FromServices] UpdateTenantRequestValidator validator, CancellationToken cancellationToken)
         {
             if (request is null)
                 throw new ArgumentNullException(nameof(request));
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
 
             var ret = await _mediator.Send(new UpdateTenantCommand() { Request = request.ToInput() }, cancellationToken);
 
@@ -79,8 +90,13 @@ namespace MTUM_Wasm.Server.Web.Controllers
 
         [HttpGet("getTenantUsers")]
         [ProducesResponseType(200, Type = typeof(IServiceResult<GetTenantUsersResponse>))]
-        public async Task<IActionResult> GetTenantUsers([FromQuery] GetTenantUsersRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetTenantUsers([FromQuery] GetTenantUsersRequest request, [FromServices] GetTenantUsersRequestValidator validator, CancellationToken cancellationToken)
         {
+            if (request is null)
+                throw new ArgumentNullException(nameof(request));
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
+
             var dtoResult = await _mediator.Send(new GetTenantUsersQuery() { Request = request.ToInput() }, cancellationToken);
             if (dtoResult.Succeeded)
                 return Ok(Result<GetTenantUsersResponse>.Success(dtoResult.Data?.ToResponse()));
@@ -89,10 +105,12 @@ namespace MTUM_Wasm.Server.Web.Controllers
 
         [HttpPost("createUser")]
         [ProducesResponseType(200, Type = typeof(IServiceResult))]
-        public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request, [FromServices] CreateUserRequestValidator validator, CancellationToken cancellationToken)
         {
             if (request is null)
                 throw new ArgumentNullException(nameof(request));
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
 
             var ret = await _mediator.Send(new CreateUserCommand() { Request = request.ToInput() }, cancellationToken);
 
@@ -101,10 +119,12 @@ namespace MTUM_Wasm.Server.Web.Controllers
 
         [HttpPost("changeUserState")]
         [ProducesResponseType(200, Type = typeof(IServiceResult))]
-        public async Task<IActionResult> ChangeUserState([FromBody] ChangeUserStateRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> ChangeUserState([FromBody] ChangeUserStateRequest request, [FromServices] ChangeUserStateRequestValidator validator, CancellationToken cancellationToken)
         {
             if (request is null)
                 throw new ArgumentNullException(nameof(request));
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
 
             var ret = await _mediator.Send(new ChangeUserStateCommand() { Request = request.ToInput() }, cancellationToken);
 
@@ -113,10 +133,12 @@ namespace MTUM_Wasm.Server.Web.Controllers
 
         [HttpPost("updateUserAttributes")]
         [ProducesResponseType(200, Type = typeof(IServiceResult))]
-        public async Task<IActionResult> UpdateUserAttributes([FromBody] UpdateUserAttributesRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateUserAttributes([FromBody] UpdateUserAttributesRequest request, [FromServices] UpdateUserAttributesRequestValidator validator, CancellationToken cancellationToken)
         {
             if (request is null)
                 throw new ArgumentNullException(nameof(request));
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
 
             var ret = await _mediator.Send(new UpdateUserAttributesCommand() { Request = request.ToInput() }, cancellationToken);
 
@@ -126,8 +148,13 @@ namespace MTUM_Wasm.Server.Web.Controllers
 
         [HttpGet("getUser")]
         [ProducesResponseType(200, Type = typeof(IServiceResult<GetUserResponse>))]
-        public async Task<IActionResult> GetUser([FromQuery] GetUserRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetUser([FromQuery] GetUserRequest request, [FromServices] GetUserRequestValidator validator, CancellationToken cancellationToken)
         {
+            if (request is null)
+                throw new ArgumentNullException(nameof(request));
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
+
             var dtoResult = await _mediator.Send(new GetUserQuery() { Request = request.ToInput() }, cancellationToken);
             if (dtoResult.Succeeded)
                 return Ok(Result<GetUserResponse>.Success(dtoResult.Data?.ToResponse()));
@@ -136,8 +163,13 @@ namespace MTUM_Wasm.Server.Web.Controllers
 
         [HttpGet("getUserGroups")]
         [ProducesResponseType(200, Type = typeof(IServiceResult<GetUserGroupsResponse>))]
-        public async Task<IActionResult> GetUserGroups([FromQuery] GetUserGroupsRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetUserGroups([FromQuery] GetUserGroupsRequest request, [FromServices] GetUserGroupsRequestValidator validator, CancellationToken cancellationToken)
         {
+            if (request is null)
+                throw new ArgumentNullException(nameof(request));
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
+
             var dtoResult = await _mediator.Send(new GetUserGroupsQuery() { Request = request.ToInput() }, cancellationToken);
             if (dtoResult.Succeeded)
                 return Ok(Result<GetUserGroupsResponse>.Success(dtoResult.Data?.ToResponse()));
@@ -146,10 +178,12 @@ namespace MTUM_Wasm.Server.Web.Controllers
 
         [HttpPost("updateUserGroups")]
         [ProducesResponseType(200, Type = typeof(IServiceResult))]
-        public async Task<IActionResult> UpdateUserGroups([FromBody] UpdateUserGroupsRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateUserGroups([FromBody] UpdateUserGroupsRequest request, [FromServices] UpdateUserGroupsRequestValidator validator, CancellationToken cancellationToken)
         {
             if (request is null)
                 throw new ArgumentNullException(nameof(request));
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
 
             var ret = await _mediator.Send(new UpdateUserGroupsCommand() { Request = request.ToInput() }, cancellationToken);
 
@@ -158,10 +192,12 @@ namespace MTUM_Wasm.Server.Web.Controllers
 
         [HttpPost("searchAuditLogs")]
         [ProducesResponseType(200, Type = typeof(IServiceResult<SearchAuditLogsResponse>))]
-        public async Task<IActionResult> SearchAuditLogs([FromBody] SearchAuditLogsRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> SearchAuditLogs([FromBody] SearchAuditLogsRequest request, [FromServices] SearchAuditLogsRequestValidator validator, CancellationToken cancellationToken)
         {
             if (request is null)
                 throw new ArgumentNullException(nameof(request));
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
 
             var dtoResult = await _mediator.Send(new SearchAuditLogsQuery() { Request = request.ToInput() }, cancellationToken);
 
@@ -172,8 +208,13 @@ namespace MTUM_Wasm.Server.Web.Controllers
 
         [HttpGet("getUsersInGroup")]
         [ProducesResponseType(200, Type = typeof(IServiceResult<GetUsersInGroupResponse>))]
-        public async Task<IActionResult> GetUsersInGroup([FromQuery] GetUsersInGroupRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetUsersInGroup([FromQuery] GetUsersInGroupRequest request, [FromServices] GetUsersInGroupRequestValidator validator, CancellationToken cancellationToken)
         {
+            if (request is null)
+                throw new ArgumentNullException(nameof(request));
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
+
             var dtoResult = await _mediator.Send(new GetUsersInGroupQuery() { Request = request.ToInput() }, cancellationToken);
             if (dtoResult.Succeeded)
                 return Ok(Result<GetUsersInGroupResponse>.Success(dtoResult.Data?.ToResponse()));
@@ -182,10 +223,12 @@ namespace MTUM_Wasm.Server.Web.Controllers
 
         [HttpPost("updateUserNacPolicy")]
         [ProducesResponseType(200, Type = typeof(IServiceResult))]
-        public async Task<IActionResult> UpdateUserNacPolicy([FromBody] UpdateUserNacPolicyRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateUserNacPolicy([FromBody] UpdateUserNacPolicyRequest request, [FromServices] UpdateUserNacPolicyRequestValidator validator, CancellationToken cancellationToken)
         {
             if (request is null)
                 throw new ArgumentNullException(nameof(request));
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
 
             var ret = await _mediator.Send(new UpdateUserNacPolicyCommand() { Request = request.ToInput() }, cancellationToken);
 
@@ -194,10 +237,12 @@ namespace MTUM_Wasm.Server.Web.Controllers
 
         [HttpPost("updateTenantNacPolicy")]
         [ProducesResponseType(200, Type = typeof(IServiceResult))]
-        public async Task<IActionResult> UpdateTenantNacPolicy([FromBody] UpdateTenantNacPolicyRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateTenantNacPolicy([FromBody] UpdateTenantNacPolicyRequest request, [FromServices] UpdateTenantNacPolicyRequestValidator validator, CancellationToken cancellationToken)
         {
             if (request is null)
                 throw new ArgumentNullException(nameof(request));
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
 
             var ret = await _mediator.Send(new UpdateTenantNacPolicyCommand() { Request = request.ToInput() }, cancellationToken);
 

@@ -5,10 +5,11 @@ using MTUM_Wasm.Shared.Core.Identity.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MTUM_Wasm.Shared.Core.Identity.Validation;
+using FluentValidation;
 
 namespace MTUM_Wasm.Server.Web.Controllers
 {
@@ -32,10 +33,12 @@ namespace MTUM_Wasm.Server.Web.Controllers
         [HttpPost("login")]
         [ProducesResponseType(200, Type = typeof(IServiceResult<LoginResponse>))]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody]LoginRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request, [FromServices] LoginRequestValidator validator, CancellationToken cancellationToken)
         {
             if (request is null)
                 throw new ArgumentNullException(nameof(request));
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
 
             var dtoResult = await _mediator.Send(new LoginCommand() { Request = request.ToInput() }, cancellationToken);
             if (dtoResult.Succeeded)
@@ -46,8 +49,13 @@ namespace MTUM_Wasm.Server.Web.Controllers
 
         [HttpPost("refresh")]
         [ProducesResponseType(200, Type = typeof(IServiceResult<RefreshResponse>))]
-        public async Task<IActionResult> Refresh([FromBody] RefreshRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Refresh([FromBody] RefreshRequest request, [FromServices] RefreshRequestValidator validator, CancellationToken cancellationToken)
         {
+            if (request is null)
+                throw new ArgumentNullException(nameof(request));
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
+
             var dtoResult = await _mediator.Send(new RefreshCommand() { Request = request.ToInput() }, cancellationToken);
             if (dtoResult.Succeeded)
                 return Ok(Result<RefreshResponse>.Success(dtoResult.Data?.ToResponse()));
@@ -66,10 +74,12 @@ namespace MTUM_Wasm.Server.Web.Controllers
         [HttpPost("changePassword")]
         [ProducesResponseType(200, Type = typeof(IServiceResult))]
         [AllowAnonymous]
-        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request, [FromServices] ChangePasswordRequestValidator validator, CancellationToken cancellationToken)
         {
             if (request is null)
                 throw new ArgumentNullException(nameof(request));
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
 
             var ret = await _mediator.Send(new ChangePasswordCommand() { Request = request.ToInput() }, cancellationToken);
 
@@ -79,10 +89,12 @@ namespace MTUM_Wasm.Server.Web.Controllers
         [HttpPost("forgotPassword")]
         [ProducesResponseType(200, Type = typeof(IServiceResult))]
         [AllowAnonymous]
-        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request, [FromServices] ForgotPasswordRequestValidator validator, CancellationToken cancellationToken)
         {
             if (request is null)
                 throw new ArgumentNullException(nameof(request));
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
 
             var ret = await _mediator.Send(new ForgotPasswordCommand() { Request = request.ToInput() }, cancellationToken);
 
@@ -92,15 +104,16 @@ namespace MTUM_Wasm.Server.Web.Controllers
         [HttpPost("resetPassword")]
         [ProducesResponseType(200, Type = typeof(IServiceResult))]
         [AllowAnonymous]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request, [FromServices] ResetPasswordRequestValidator validator, CancellationToken cancellationToken)
         {
             if (request is null)
                 throw new ArgumentNullException(nameof(request));
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
 
             var ret = await _mediator.Send(new ResetPasswordCommand() { Request = request.ToInput() }, cancellationToken);
 
             return Ok(ret);
         }
     }
-
 }

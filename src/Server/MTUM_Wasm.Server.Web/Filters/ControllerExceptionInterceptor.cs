@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using FluentValidation;
+using System.Linq;
 
 namespace MTUM_Wasm.Server.Web.Filters;
 
@@ -30,6 +32,16 @@ internal class ControllerExceptionInterceptor : IAsyncExceptionFilter
                 var modelState = context.ModelState;
                 if (modelState.IsValid)
                     modelState.AddModelError("$", ex.Message);
+                var validationProblem = problemDetailsFactory.CreateValidationProblemDetails(context.HttpContext, modelState);
+                context.Result = new BadRequestObjectResult(validationProblem);
+            }
+            else if (ex is ValidationException vex)
+            {
+                var modelState = context.ModelState;
+                if (modelState.IsValid)
+                {
+                    vex.Errors.Select(e => new { Key = e.PropertyName, ErrorMessage = e.ErrorMessage }).ToList().ForEach(e => modelState.AddModelError(e.Key, e.ErrorMessage));
+                }
                 var validationProblem = problemDetailsFactory.CreateValidationProblemDetails(context.HttpContext, modelState);
                 context.Result = new BadRequestObjectResult(validationProblem);
             }

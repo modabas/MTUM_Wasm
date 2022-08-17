@@ -14,7 +14,6 @@ using MTUM_Wasm.Server.Web.Filters;
 using MTUM_Wasm.Shared.Core.Common.Authorization;
 using MTUM_Wasm.Shared.Core.Common.Extension;
 using MTUM_Wasm.Shared.Core.Identity.Policy;
-using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -32,6 +31,7 @@ using Orleans.Hosting;
 using System;
 using System.Collections.Generic;
 using System.IO.Compression;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,11 +56,6 @@ builder.Services.AddControllersWithViews(options =>
     options.Filters.Add<ControllerExceptionInterceptor>();
     options.Filters.Add<ThrottlingInterceptor>();
 })
-//...and fluent validation
-.AddFluentValidation(fv =>
-{
-    fv.RegisterValidatorsFromAssemblyContaining<MTUM_Wasm.Shared.Core.Identity.Validation.LoginRequestValidator>(lifetime: ServiceLifetime.Singleton);
-})
 //...and automatic bad request logging
 .ConfigureApiBehaviorOptions(options =>
 {
@@ -80,7 +75,8 @@ builder.Services.AddControllersWithViews(options =>
         return builtInFactory(context);
     };
 });
-
+//...and fluent validation
+builder.Services.AddValidatorsFromAssemblyContaining<MTUM_Wasm.Shared.Core.Identity.Validation.LoginRequestValidator>();
 
 //add razor pages 
 builder.Services.AddRazorPages();
