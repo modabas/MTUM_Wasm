@@ -12,14 +12,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation.AspNetCore" Version="11.1.2" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.7" />
-    <PackageReference Include="Microsoft.Orleans.Clustering.AdoNet" Version="3.6.2" />
-    <PackageReference Include="Microsoft.Orleans.Persistence.AdoNet" Version="3.6.2" />
-    <PackageReference Include="Microsoft.Orleans.Reminders.AdoNet" Version="3.6.2" />
-    <PackageReference Include="Microsoft.Orleans.Server" Version="3.6.2" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.16.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.8" />
+    <PackageReference Include="Microsoft.Orleans.Clustering.AdoNet" Version="3.6.5" />
+    <PackageReference Include="Microsoft.Orleans.Persistence.AdoNet" Version="3.6.5" />
+    <PackageReference Include="Microsoft.Orleans.Reminders.AdoNet" Version="3.6.5" />
+    <PackageReference Include="Microsoft.Orleans.Server" Version="3.6.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
