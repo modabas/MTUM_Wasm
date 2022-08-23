@@ -26,6 +26,10 @@ Selecting "Sign-out" from user interface clears tokens from browser cache, but s
 
 Selecting "Sign-out Globally" from user interface clears tokens from browser cache and invalidates any refresh tokens granted until now. Other sessions already established at other browsers will remain intact until their access and id tokens expire (an hour max by default) but will not be refreshed from AWS Cognito because refresh tokens are invalidated. They will require to sign-in again.
 
+### Why use resource owner password credentials grant?
+When you have an interactive client (a user), it's better to implement authorization code grant flow if you can. However ROPC grant flow has its uses too, like to perform a [server side one-at-a-time migration of existing users from a legacy authentication system](https://aws.amazon.com/blogs/mobile/migrating-users-to-amazon-cognito-user-pools/).
+Note: This code does not include implemention of/call to a migration service during sign-in as explained in above document.
+
 ### User rights
 Users in "systemAdmin" group can;
 1. Create/modify tenants, users (for tenants or other system admins),
