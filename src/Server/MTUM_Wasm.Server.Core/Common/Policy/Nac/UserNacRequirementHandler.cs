@@ -29,9 +29,9 @@ internal class UserNacRequirementHandler : AuthorizationHandler<UserNacRequireme
             return;
         }
         var nacPolicy = currentUser.NacPolicy;
-        var remoteIpAddress = _httpContextAccessor.GetRequestIP(true);
+        var remoteIpAddressResult = _httpContextAccessor.GetRequestIP(true);
 
-        NacPolicyHelper.ValidateNacRequirement(context, this, requirement, nacPolicy, remoteIpAddress);
+        NacPolicyHelper.ValidateNacRequirement(context, this, requirement, nacPolicy, remoteIpAddressResult);
         return;
     }
 }

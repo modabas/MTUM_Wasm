@@ -142,6 +142,9 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy(Policy.Name.IsSystemAdmin, builder => builder.AddIsSystemAdminPolicy());
 });
 
+//inject SystemAccessControlOptions from configuration
+builder.Services.Configure<SystemAccessControlOptions>(builder.Configuration.GetSection("SystemAccessControlOptions"));
+
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddTransient<IUserAccessor, UserAccessor>();
 
@@ -234,6 +237,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseMiddleware<ExceptionHandlerMiddleware>();
+    app.UseMiddleware<SystemAccessControlMiddleware>();
     app.UseWebAssemblyDebugging();
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -244,6 +248,7 @@ else
     //use exception handler cannot handle errors from UseAuthentication
     //use middleware instead
     app.UseMiddleware<ExceptionHandlerMiddleware>();
+    app.UseMiddleware<SystemAccessControlMiddleware>();
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
